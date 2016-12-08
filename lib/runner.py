@@ -6,25 +6,19 @@ from lib import utils
 
 class QTestResult(TextTestResult):
 
-    def addError(self, test, err):
-        super(QTestResult, self).addError(test, err)
-        self.log(False,test)
-
-    def addFailure(self, test, err):
-        super(QTestResult, self).addFailure(test, err)
-        self.log(False,test)
-    def addSuccess(self, test):
-        super(QTestResult, self).addSuccess(test)   
-        self.log(True,test)
-    
     def startTest(self, test):
         super(QTestResult, self).startTest(test)
-        self.startTime=time.time()
+        self.test = test
 
-    def log(self,re,test):
+    def stopTestRun(self):
+        re=len(self.failures) == 0 and len(self.errors) == 0 
+        caseid = type(self.test).caseid     
         seconds = "%.3f" % (time.time() - self.startTime)
-        minutes = utils.convertToMinutes(float(seconds))
-        utils.commitresult(type(test).caseid, re, minutes)
+        minutes = convertToMinutes(float(seconds))
+        commitresult(caseid, re, minutes)
+        
+    def startTestRun(self):
+        self.startTime=time.time()
 
 qRunner=TextTestRunner(resultclass=QTestResult)
 def runTest(testcase):
