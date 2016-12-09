@@ -25,19 +25,19 @@ def getClass(file):
 def main():
     idlist = getIdFile()
     classes = []
-    listdir = ["dde_launcher"]
-    for adir in listdir:
-       files = os.listdir(adir)
+    casedirs = ["dde_launcher"]
+    for casedir in casedirs:
+       files = os.listdir(casedir)
        files=list(filter(lambda e : e.startswith("test"),files))
        for f in files:
-            m=importlib.import_module(adir+"."+f[:-3])
-            na = getClass(adir+"/"+f)
-            testClass =getattr(m,na)
-            if hasattr(m,"caseid"):
-                testClass.caseid=getattr(m,"caseid")
+            module = importlib.import_module(".".join((casedir, f[:-3])))
+            class_name = getClass(os.sep.join((casedir, f)))
+            testClass = getattr(module,class_name)
+            if hasattr(module,"caseid"):
+                testClass.caseid=getattr(module,"caseid")
             classes.append(testClass)
 
-    #classes=list(filter(lambda e:e.caseid in idlist,classes))
+    classes=list(filter(lambda e:e.caseid in idlist,classes))
     for c in classes:
         runTest(c.suite())
 if __name__ == '__main__':

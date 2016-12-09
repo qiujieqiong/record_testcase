@@ -10,12 +10,12 @@ from lib import utils
 #from lib.dde_dock import *
 
 
-caseid = '2'
+caseid = '3'
 casename = 'all-518:添加到任务栏'
 
-class LauncherAddToDock2(unittest.TestCase):
+class LauncherAddToDock3(unittest.TestCase):
 
-    caseid='33842'
+    caseid='3'
     @classmethod
     def setUpClass(cls):
         
@@ -42,9 +42,15 @@ class LauncherAddToDock2(unittest.TestCase):
     	#launcher.menuDock(self.googleName)
     	#dockApps = Dock().getAllDockApps()
         sleep(2)
-        self.assertEqual(1,10)
+        self.assertEqual(1,1)
 
     def testMenuDock2(self):
+        #launcher.menuDock(self.googleName)
+        #dockApps = Dock().getAllDockApps()
+        sleep(2)
+        self.assertEqual(1,1)
+
+    def testMenuDock3(self):
         #launcher.menuDock(self.googleName)
         #dockApps = Dock().getAllDockApps()
         sleep(2)
@@ -53,8 +59,9 @@ class LauncherAddToDock2(unittest.TestCase):
 
     def suite():
         suite = unittest.TestSuite()
-        suite.addTest(LauncherAddToDock2('testMenuDock'))
-        suite.addTest(LauncherAddToDock2('testMenuDock2'))
+        suite.addTest(LauncherAddToDock3('testMenuDock'))
+        suite.addTest(LauncherAddToDock3('testMenuDock2'))
+        suite.addTest(LauncherAddToDock3('testMenuDock3'))
         return suite
 
     
@@ -62,4 +69,4 @@ class LauncherAddToDock2(unittest.TestCase):
             
 
 if __name__ == "__main__":
-    runner.runTest(LauncherAddToDock2.suite())
+    runner.runTest(LauncherAddToDock3.suite())

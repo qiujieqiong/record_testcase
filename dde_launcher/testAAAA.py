@@ -3,13 +3,14 @@
 
 
 import unittest
+from lib import executeTestCase
 from time import sleep
-from lib import runner,utils
+from lib import utils
 #from lib.launcher import *
 #from lib.dde_dock import *
 
 
-caseid = '33840'
+caseid = '1'
 casename = 'all-518:添加到任务栏'
 
 class LauncherAddToDock(unittest.TestCase):
@@ -43,10 +44,18 @@ class LauncherAddToDock(unittest.TestCase):
         sleep(1)
         self.assertEqual(1,1)
 
+    def testMenuDock2(self):
+        #launcher.menuDock(self.googleName)
+        #dockApps = Dock().getAllDockApps()
+        sleep(1)
+        print(1>'a')
+        self.assertEqual(1,1)
+
 
     def suite():
         suite = unittest.TestSuite()
         suite.addTest(LauncherAddToDock('testMenuDock'))
+        suite.addTest(LauncherAddToDock('testMenuDock2'))
         return suite
 
     
