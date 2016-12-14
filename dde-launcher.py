@@ -3,42 +3,27 @@
 
 from lib.executeTestCase import runTest
 import importlib
-import os 
-import re
-from lib import utils
+import os
+from unittest import TestCase
+
+casedirs=["dde_launcher","dde_dock"]
 
 def getIdFile():
     return ["2","3"]
 
+def getClass(f):
+    clas = [ getattr(f,c) for c in dir(f) ]
+    clas = [ cla for cla in clas if hasattr(cla,"__bases__") and TestCase in cla.__bases__ ]
+    noIdClas=[  cla for cla in clas if not hasattr(cla,"caseid")]
+    for ncla in noIdClas:
+        ncla.caseid = f.caseid
+    return clas
 
+def getAllClass():
+    allmodules = [  d+"."+f[:-3] for d in casedirs for f in os.listdir(d) if  f.startswith("test")]
+    classes = [getClass(importlib.import_module(f)) for f in allmodules ]
+    return [ c  for x in classes for c in x  if  c.caseid in getIdFile() ]
 
-def getClass(file):
-    with open(file, 'r') as f:
-        for line in f.readlines():
-            match = re.match('class (.*)\(unittest.TestCase',line)
-            if match:
-                return match.group(1)
-    raise Exception(file +' has no class ')
-
-
-    
-def main():
-    idlist = getIdFile()
-    classes = []
-    casedirs = ["dde_launcher"]
-    for casedir in casedirs:
-       files = os.listdir(casedir)
-       files=list(filter(lambda e : e.startswith("test"),files))
-       for f in files:
-            module = importlib.import_module(".".join((casedir, f[:-3])))
-            class_name = getClass(os.sep.join((casedir, f)))
-            testClass = getattr(module,class_name)
-            if hasattr(module,"caseid"):
-                testClass.caseid=getattr(module,"caseid")
-            classes.append(testClass)
-
-    classes=list(filter(lambda e:e.caseid in idlist,classes))
-    for c in classes:
-        runTest(c.suite())
 if __name__ == '__main__':
-    main()
+    for c in getAllClass():
+        runTest(c)

@@ -10,15 +10,15 @@ from lib import utils
 #from lib.dde_dock import *
 
 
-caseid='33840'
+caseid = '6'
 casename = 'all-518:添加到任务栏'
 
-class LauncherAddToDock(unittest.TestCase):
+class LauncherB3(unittest.TestCase):
 
     caseid='33840'
     @classmethod
     def setUpClass(cls):
-        
+
         '''
         cls.menuObj = root.application(appName='deepin-menu', description='/usr/lib/deepin-menu')
         cls.googleName = 'Google Chrome'
@@ -54,13 +54,13 @@ class LauncherAddToDock(unittest.TestCase):
 
     def suite():
         suite = unittest.TestSuite()
-        suite.addTest(LauncherAddToDock('testMenuDock'))
-        suite.addTest(LauncherAddToDock('testMenuDock2'))
+        suite.addTest(LauncherB3('testMenuDock'))
+        suite.addTest(LauncherB3('testMenuDock2'))
         return suite
 
-    
-            
-            
+
+
+
 
 if __name__ == "__main__":
     runner.runTest(LauncherAddToDock.suite())

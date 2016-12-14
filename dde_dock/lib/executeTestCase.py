@@ -22,4 +22,4 @@ class QTestResult(TextTestResult):
 
 qRunner=TextTestRunner(resultclass=QTestResult)
 def runTest(testcase):
-    qRunner.run(testcase.suite())
+    qRunner.run(testcase)
